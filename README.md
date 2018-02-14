@@ -122,6 +122,9 @@ Ein Worker benötigt docker,  sein Cert-Bundle und
 /etc/kubernetes/ssl/kubeconfig-node.yml
 ~~~
 
+wobei kubelet.service angepasst werden muss. 
+So muss der Taint raus und das label auf worker oder/und node gesetzt werden.
+
 
 Kontrollieren ob sich der nodes angemeldet hat:
 
