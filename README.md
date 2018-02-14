@@ -163,6 +163,8 @@ kubectl -f  Deploy/10-kube-system-serviceaccount.yml
 
 Der DaemonSet Kube-proxy rollt den Container aus, welcher die Iptables-Regeln (Servicenetz) auf allen Hosts schreibt.
 
+Vorher in Deploy/20-kube-proxy.yaml $APISERVER auf den  passen API-Server setzen.
+
 ~~~
 kubectl -f  Deploy/20-kube-proxy.yaml
 ~~~
