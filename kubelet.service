@@ -1,0 +1,31 @@
+[Unit]
+Description = Kubelet Service
+After       = network.target docker.service 
+[Service]
+ExecStartPre = -/usr/bin/mkdir -p /usr/local/bin
+ExecStartPre = -/usr/bin/docker run --rm -v /usr/local/bin:/srv gcr.io/google-containers/hyperkube:v1.9.2 sh -c 'cp /hyperkube /srv/kubectl'
+ExecStartPre = -/usr/bin/docker run --rm -v /usr/local/bin:/srv gcr.io/google-containers/hyperkube:v1.9.2 sh -c 'cp /hyperkube /srv/kubelet'
+ExecStartPre = -/usr/bin/docker run --rm -v /opt/cni/bin:/srv -w /opt/cni/bin  gcr.io/google-containers/hyperkube:v1.9.2 sh -c 'cp * /srv'
+ExecStartPre = -/usr/bin/mkdir -p /etc/kubernetes/manifests
+ExecStartPre = -/bin/mkdir -p /var/lib/kubelet
+ExecStart=/usr/local/bin/kubelet --pod-manifest-path /etc/kubernetes/manifests --allow-privileged true  \
+--kubeconfig=/etc/kubernetes/ssl/kubeconfig-node.yml \
+--container-runtime=docker --cgroup-driver=systemd\
+--allow-privileged=true \
+--cluster_dns=10.30.10.11 \
+--cluster_domain=cluster.local \
+--network-plugin=cni \
+--register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
+--node-labels=node-role.kubernetes.io/master \
+--kube-reserved=memory=200Mi,cpu=100m \
+--system-reserved=memory=200Mi,cpu=100m \
+--volume-plugin-dir=/var/lib/kubelet/volumeplugins \
+--pod-manifest-path=/etc/kubernetes/manifests
+
+Restart=         always
+RestartSec=      10
+TimeoutStartSec= 300
+
+[Install]
+WantedBy=multi-user.target
+
