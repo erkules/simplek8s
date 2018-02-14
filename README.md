@@ -146,3 +146,38 @@ Kontrollieren ob sich der nodes angemeldet hat:
 ~~~
 kubectl get nodes
 ~~~
+
+# Hier ein paar ungetestete :/ Beispiele
+
+Jetzt wo der Cluster "steht" kann nun via dem API-Server deployt werden.
+
+Wir setzen die Rechte des ServiceAccounts des Namespaces kube-system.
+
+Ganz bösartig wird der Serviceaccount (default) des Namespaces kube-system zum cluster-admin.
+
+~~~
+kubectl -f  Deploy/10-kube-system-serviceaccount.yml
+~~~
+
+## Kube-proxy
+
+Der DaemonSet Kube-proxy rollt den Container aus, welcher die Iptables-Regeln (Servicenetz) auf allen Hosts schreibt.
+
+~~~
+kubectl -f  Deploy/20-kube-proxy.yaml
+~~~
+
+Den Status des DaemonSet ansehen:
+
+~~~
+kubectl get ds kube-proxy -n kube-system
+~~~
+
+# Netzwerk
+
+
+Folgend wir Canal deployed
+
+~~~
+kubectl -f  Deploy/30-canal.yaml
+~~~
