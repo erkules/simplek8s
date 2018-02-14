@@ -10,7 +10,7 @@ Das ist ein einfaches Howto um ein Kubernetes aufzubauen.
 
 ### Controlplane/Master
 
-Die Controlplen besteht aus
+Die Controlplane besteht aus
 
 * docker
 * Kubelet (systemd)
@@ -73,6 +73,12 @@ systemctl enable docker
 systemctl start docker
 ~~~
 
+Swap muss ausgeschaltet werden.
+
+~~~
+swapoff -a
+~~~
+
 ### Kubelet
 
 Als nächstes starten wir das Kubelet als systemd-Unit. 
@@ -87,6 +93,13 @@ Dazu werden zwei Dateien benötigt:
 /etc/kubernetes/ssl/kubeconfig-node.yml
 ~~~
 
+Dann noch den Service starten:
+
+~~~
+systemclt start kubelet
+systemclt enable kubelet
+~~~
+
 ### Controlplane
 
 
@@ -96,6 +109,8 @@ Nun werden folgende Dateien in das Verzeichnis `/etc/kubernetes/manifests` des M
 * apiserver.pod       (Unser API-Server)
 * controller.pod
 * scheduler.pod
+
+Im etcd.pad
 
 Das Kubelet liest die Datei und rollt die Pods aus. Bitte bei jeder Datei mit `docker ps` oder `docker ps -a` den Fortschritt prüfen.
 Jedes Pod spawnt 2 Container. (Pause und hyperkube $option) 
