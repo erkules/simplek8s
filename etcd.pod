@@ -13,8 +13,8 @@ spec:
     - --name
     - etcd
     - --data-dir=/data/etcd
-    - --listen-client-urls=http://127.0.0.1:2379,http://192.168.10.211:2379
-    - --advertise-client-urls=http://k8s-master.novalocal:2379
+    - --listen-client-urls=http://127.0.0.1:2379
+    - --advertise-client-urls=http://127.0.0.1:2379
     - --auto-tls
 
 
