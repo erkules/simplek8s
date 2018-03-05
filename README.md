@@ -183,3 +183,35 @@ Folgend wir Canal deployed
 ~~~
 kubectl -f  Deploy/30-canal.yaml
 ~~~
+
+
+# Heapster 
+
+~~~
+kubectl -f  Deploy/40-heapster.yaml
+~~~
+
+# Dashboard
+
+
+Im Code ist das Secret für das Passwort  (die ConfigMap) auskommentiert.
+
+Erst mal ein eigenes Passwort erstellen:
+
+~~~
+kubectl -n kube-system create secret  generic  dashboard-secret2  --from-literal=auth=$MEINPASSWORT
+~~~
+~~~
+kubectl -f  Deploy/44-kubernetes-dashboard.yaml
+~~~
+
+# Ingress
+
+~~~
+kubectl -f  Deploy/50-ingress.yaml
+~~~
+
+# Zugriff auf das Dashboard
+
+Mit laufendem Ingress sollten Zugriffe auf den Port 30080 ( irgendeines Culsternodes zum Dashboard führen.
+
